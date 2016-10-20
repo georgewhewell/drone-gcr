@@ -1,9 +1,9 @@
-# Docker image for the google container registry plugin
+# Docker image for the gcr plugin
 #
 #     docker build --rm=true -t plugins/drone-gcr .
 
-FROM rancher/docker:1.8.1
+FROM plugins/docker:latest
 
-ADD drone-gcr /go/bin/
-VOLUME /var/lib/docker
-ENTRYPOINT ["/usr/bin/dockerlaunch", "/go/bin/drone-gcr"]
+ADD bin/wrap-drone-docker.sh /bin/wrap-drone-docker.sh
+
+ENTRYPOINT /bin/wrap-drone-docker.sh

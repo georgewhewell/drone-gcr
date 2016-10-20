@@ -1,0 +1,11 @@
+#!/bin/sh
+
+[ -n "$GCR_SERVICE_KEY" ] && export PLUGIN_SERVICE_KEY=${GCR_SERVICE_KEY}
+
+export DOCKER_USERNAME=${PLUGIN_USERNAME:-"_json_key"}
+export DOCKER_REGISTRY=${PLUGIN_REGISTRY:-"gcr.io"}
+export DOCKER_PASSWORD=$PLUGIN_SERVICE_KEY
+
+export PLUGIN_REPO="${DOCKER_REGISTRY#https://}/$PLUGIN_REPO"
+
+/bin/drone-docker "$@"

@@ -1,9 +1,9 @@
-Use this plugin to build and push Docker images to the Google Container Registry (GCR). Please read the GCR [documentation](https://cloud.google.com/container-registry/) before you begin. You will need to generate a [JSON token](https://developers.google.com/console/help/new/#serviceaccounts) to authenticate to the registry and push images.
+Use this plugin to build and push Docker images to the Google Container Registry (GCR). Please read the GCR [documentation](https://cloud.google.com/container-registry/) before you begin. You will need to generate a [service account key](https://developers.google.com/console/help/new/#serviceaccounts) to authenticate to the registry and push images.
 
 The following parameters are used to configure this plugin:
 
 * `registry` - authenticates to this registry (defaults to `gcr.io`)
-* `token` - json token
+* `service_key` - service account key
 * `repo` - repository name for the image
 * `tag` - repository tag for the image (defaults to `latest`)
 * `storage_driver` - use `aufs`, `devicemapper`, `btrfs` or `overlay` driver
@@ -14,13 +14,13 @@ Sample configuration:
 publish:
   gcr:
     repo: foo/bar
-    token: >
+    service_key: |
       {
-        "private_key_id": "...",
-        "private_key": "...",
-        "client_email": "...",
-        "client_id": "...",
-        "type": "..."
+      "private_key_id": "...",
+      "private_key": "...",
+      "client_email": "...",
+      "client_id": "...",
+      "type": "..."
       }
 ```
 
@@ -34,13 +34,13 @@ publish:
       - latest
       - "1.0.1"
       - "1.0"
-    token: >
+    service_key: |
       {
-        "private_key_id": "...",
-        "private_key": "...",
-        "client_email": "...",
-        "client_id": "...",
-        "type": "..."
+      "private_key_id": "...",
+      "private_key": "...",
+      "client_email": "...",
+      "client_id": "...",
+      "type": "..."
       }
 ```
 
@@ -51,13 +51,13 @@ When setting your token in the `.drone.yml` file you must use [folded block scal
 ```
 publish:
   gcr:
-    token: >
+    service_key: >
       {
-        "private_key_id": "...",
-        "private_key": "...",
-        "client_email": "...",
-        "client_id": "...",
-        "type": "..."
+      "private_key_id": "...",
+      "private_key": "...",
+      "client_email": "...",
+      "client_id": "...",
+      "type": "..."
       }
 ```
 
@@ -66,7 +66,7 @@ When injecting secrets you must also use a folded block scalar:
 ```
 publish:
   gcr:
-    token: >
+    service_key: >
       $$GOOGLE_KEY
 ```
 
